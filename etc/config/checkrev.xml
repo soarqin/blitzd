@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Revisions>
+	<Revision
+		gameName="Warcraft III"
+		gameId="W3XP"
+		file1="War3.exe"
+		file2="Storm.dll"
+		file3="Game.dll"
+		exever="0x011801E6"
+		/>
+</Revisions>

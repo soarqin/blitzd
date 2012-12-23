@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Mapsets>
+	<Mapset type="PG">
+		<Maps
+			type="1vs1"
+			desc="One vs. One"
+			longDesc="Two players fight to the death"
+			thumbsDown="3">
+			<Map path="Maps\FrozenThrone\(2)SecretValley.w3x"/>
+			<Map path="Maps\FrozenThrone\(2)MeltingValley.w3x"/>
+			<Map path="Maps\FrozenThrone\(2)RoadToStratholme.w3x"/>
+			<Map path="Maps\FrozenThrone\(2)EchoIsles.w3x"/>
+			<Map path="Maps\FrozenThrone\(2)TerenasStand.w3x"/>
+			<Map path="Maps\FrozenThrone\(2)TirisfalGlades.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)BrokenShard.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)CentaurGrove.w3x"/>
+			<Map path="Maps\(4)LostTemple.w3m"/>
+			<Map path="Maps\FrozenThrone\(4)TidewaterGlades.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)TurtleRock.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)TwistedMeadows.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)GnollWood.w3x"/>
+		</Maps>
+		<Maps
+			type="2vs2"
+			desc="Two vs. Two"
+			longDesc="Two teams of two vie for dominance"
+			thumbsDown="2">
+			<Map path="Maps\FrozenThrone\(4)CentaurGrove.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)ExcavationSite.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)Goldshire.w3x"/>
+			<Map path="Maps\(4)LostTemple.w3m"/>
+			<Map path="Maps\FrozenThrone\(4)PhantomGrove.w3x"/>
+			<Map path="Maps\(4)TranquilPaths.w3m"/>
+			<Map path="Maps\FrozenThrone\(4)TidewaterGlades.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)TurtleRock.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)TwistedMeadows.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)Wetlands.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)GnollWood.w3x"/>
+		</Maps>
+		<Maps
+			type="3vs3"
+			desc="Three vs. Three"
+			longDesc="Two teams of three face off on the battlefield"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(6)BloodstoneMesa.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)CopperCanyon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Dragonblight.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Everfrost.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)GnollWood.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Highperch.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Monsoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)RiceFields.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)SilverpineForest.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)SunrockCove.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Typhoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)UpperKingdom.w3x"/>
+		</Maps>
+		<Maps
+			type="4vs4"
+			desc="Four vs. Four"
+			longDesc="Two teams of four head to battle"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(8)Battleground.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Cherryville.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Deadlock.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)DragonFalls.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Friends.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)FullScaleAssault.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)GoldRush.w3x"/>
+			<Map path="Maps\(8)GolemsInTheMist.w3m"/>
+			<Map path="Maps\FrozenThrone\(8)HurricaneIsle.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)MarketSquare.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Mur'gulOasis.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Slalom.w3x"/>
+		</Maps>
+		<Maps
+			type="5vs5"
+			desc="Five vs. Five"
+			longDesc="Two teams of five - who will prevail?"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(10)RagingStream.w3x"/>
+			<Map path="Maps\FrozenThrone\(12)EmeraldGardens.w3x"/>
+		</Maps>
+		<Maps
+			type="6vs6"
+			desc="Six Vs. Six"
+			longDesc="Two teams of six - get ready to rumble!"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(12)EmeraldGardens.w3x"/>
+		</Maps>
+		<Maps
+			type="2vs2vs2"
+			desc="Two vs. Two vs. Two"
+			longDesc="Three teams of two can you handle it?"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(6)BloodstoneMesa.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)CopperCanyon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Dragonblight.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Everfrost.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)GnollWood.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Highperch.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Monsoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)RiceFields.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)SilverpineForest.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)SunrockCove.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Typhoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)UpperKingdom.w3x"/>
+		</Maps>
+		<Maps
+			type="3vs3vs3"
+			desc="Three vs. Three vs. Three"
+			longDesc="Three teams of three battle each other"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(9)RoundVillage.w3x"/>
+			<Map path="Maps\FrozenThrone\(10)RagingStream.w3x"/>
+			<Map path="Maps\FrozenThrone\(12)EmeraldGardens.w3x"/>
+		</Maps>
+		<Maps
+			type="4vs4vs4"
+			desc="Four vs. Four vs. Four"
+			longDesc="Three teams of four - things getting crowded?"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(12)EmeraldGardens.w3x"/>
+		</Maps>
+		<Maps
+			type="2vs2vs2vs2"
+			desc="Two vs. Two vs. Two vs. Two"
+			longDesc="Four teams of two is this a challenge?"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(8)Battleground.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Cherryville.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Deadlock.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)DragonFalls.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Friends.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)FullScaleAssault.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)GoldRush.w3x"/>
+			<Map path="Maps\(8)GolemsInTheMist.w3m"/>
+			<Map path="Maps\FrozenThrone\(8)HurricaneIsle.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)MarketSquare.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Mur'gulOasis.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Slalom.w3x"/>
+		</Maps>
+		<Maps
+			type="3vs3vs3vs3"
+			desc="Three vs. Three vs. Three vs. Three"
+			longDesc="Four teams of three the ultimate challenge!"
+			thumbsDown="1">
+			<Map path="Maps\FrozenThrone\(12)EmeraldGardens.w3x"/>
+		</Maps>
+		<Maps
+			type="ffa"
+			desc="Small Free for All"
+			longDesc="Can you defeat 3-5 opponents alone?"
+			thumbsDown="2">
+			<Map path="Maps\FrozenThrone\(4)Deathrose.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)TwistedMeadows.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Duststorm.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)EmeraldShores.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Monsoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)SilverpineForest.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Deadlock.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)GoldRush.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)HurricaneIsle.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)MarketSquare.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Mur'gulOasis.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)TwilightRuins.w3x"/>
+		</Maps>
+	</Mapset>
+	<Mapset type="AT">
+		<Maps
+			type="2vs2"
+			desc="Two vs. Two"
+			longDesc="Two teams of two vie for dominance"
+			thumbsDown="2">
+			<Map path="Maps\FrozenThrone\(4)Avalanche.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)LostTemple.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)Predators.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)StoneColdMountain.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)TwistedMeadows.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)CopperCanyon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)GnollWood.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)RiverOfSouls.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)RollingHills.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Typhoon.w3x"/>
+		</Maps>
+		<Maps
+			type="3vs3"
+			desc="Three vs. Three"
+			longDesc="Two teams of three face off on the battlefield"
+			thumbsDown="2">
+			<Map path="Maps\FrozenThrone\(6)BloodstoneMesa.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)CopperCanyon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)GnollWood.w3x"/>
+			<Map path="Maps\FrozenThrone(6)HinterlandRaid.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Monsoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)RiverOfSouls.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)RuinsOfStratholme.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Typhoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)UpperKingdom.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Mur'gulOasis.w3x"/>
+		</Maps>
+		<Maps
+			type="4vs4"
+			desc="Four vs. Four"
+			longDesc="Two teams of four head to battle"
+			thumbsDown="2">
+			<Map path="Maps\FrozenThrone\(8)Battleground.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Deadlands.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Deadlock.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)DragonFalls.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Feralas.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)GoldRush.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)MarketSquare.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Mur'gulOasis.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)TwilightRuins.w3x"/>
+		</Maps>
+		<Maps
+			type="2vs2vs2"
+			desc="Two vs. Two vs. Two"
+			longDesc="Three teams of two can you handle it?"
+			thumbsDown="2">
+			<Map path="Maps\FrozenThrone\(4)Deathrose.w3x"/>
+			<Map path="Maps\FrozenThrone\(4)TwistedMeadows.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Duststorm.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)EmeraldShores.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Monsoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)SilverpineForest.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Deadlock.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)GoldRush.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)HurricaneIsle.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)MarketSquare.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Mur'gulOasis.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)TwilightRuins.w3x"/>
+		</Maps>
+		<Maps
+			type="ffa"
+			desc="Team Free for All"
+			longDesc="Can your team defeat 1-2 others?"
+			thumbsDown="2">
+			<Map path="Maps\FrozenThrone\(6)BloodstoneMesa.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)CopperCanyon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)GnollWood.w3x"/>
+			<Map path="Maps\FrozenThrone(6)HinterlandRaid.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Monsoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)RiverOfSouls.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)RuinsOfStratholme.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)Typhoon.w3x"/>
+			<Map path="Maps\FrozenThrone\(6)UpperKingdom.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Mur'gulOasis.w3x"/>
+		</Maps>
+	</Mapset>
+	<Mapset type="TOURNEY">
+		<Maps
+			type="tourney"
+			desc="Tournament Game"
+			longDesc="Tournament Game"
+			thumbsDown="0">
+			<Map path="Maps\FrozenThrone\(8)Mur'gulOasis.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)PlainsOfSnow.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)RockQuarry.w3x"/>
+			<Map path="Maps\FrozenThrone\(8)Sanctuary.w3x"/>
+		</Maps>
+	</Mapset>
+</Mapsets>
+<Ladders>
+	<Ladder type="SOLO" desc="Solo Games" url="http://www.ladder-page.com/?game=W3XP&amp;type=solo" />
+	<Ladder type="TEAM" desc="Free For all Games" url="http://www.ladder-page.com/?game=W3XP&amp;type=ffa" />
+	<Ladder type="FFA " desc="Team Games" url="http://www.ladder-page.com/?game=W3XP&amp;type=team" />
+	<Ladder type="2VS2" desc="2 Player Team" url="http://www.ladder-page.com/?game=W3XP&amp;type=at" />
+	<Ladder type="3VS3" desc="3 Player Team" url="http://www.ladder-page.com/?game=W3XP&amp;type=at" />
+	<Ladder type="4VS4" desc="4 Player Team" url="http://www.ladder-page.com/?game=W3XP&amp;type=at" />
+	<Ladder type="CLNS" desc="Solo Games" url="http://www.ladder-page.com/?game=W3XP&amp;type=clan_1v1" />
+	<Ladder type="CLN2" desc="2 Player Team" url="http://www.ladder-page.com/?game=W3XP&amp;type=clan_2v2" />
+	<Ladder type="CLN3" desc="3 Player Team" url="http://www.ladder-page.com/?game=W3XP&amp;type=clan_3v3" />
+	<Ladder type="CLN4" desc="4 Player Team" url="http://www.ladder-page.com/?game=W3XP&amp;type=clan_4v4" />
+</Ladders>
+<Pages>
+	<Page type="server" url="http://www.ladder-page.com" />
+	<Page type="player" url="http://www.ladder-page.com/?game=W3XP&amp;user=" />
+	<Page type="tourney" url="http://www.ladder-page.com" />
+	<Page type="clan" url="http://www.clan-page.com/?clan=" />
+</Pages>

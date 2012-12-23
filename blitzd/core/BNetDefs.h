@@ -1,0 +1,44 @@
+#ifndef _BNETDEFS_H_
+#define _BNETDEFS_H_
+
+// == Official defines ==
+
+// Game IDs
+#define GAME_ID_W3XP		'W3XP'
+#define GAME_ID_WAR3		'WAR3'
+#define GAME_ID_DIABLO		'DRTL'
+#define GAME_ID_DIABLO2		'D2DV'
+#define GAME_ID_DIABLO2EXP	'D2XP'
+#define GAME_ID_STARCRAFT	'STAR'
+#define GAME_ID_BROODWAR	'SEXP'
+#define GAME_ID_WAR2		'W2BN'
+
+// User Flags
+#define UF_BLIZZARD		0x00000001
+#define UF_CHANNELOP	0x00000002
+#define UF_SPEAKER		0x00000004
+#define UF_ADMIN		0x00000008
+#define UF_NOUDP		0x00000010
+#define UF_SQUELCHED	0x00000020
+#define UF_SPECIAL		0x00000040
+#define UF_WCGOFFICIAL	0x00001000
+#define UF_GFOFFICIAL	0x00100000
+#define UF_GFPLAYER		0x00200000
+#define UF_PGLPLAYER	0x02000000
+
+// Clan Flags
+#define CF_PUBLIC		0x0001
+#define CF_MODERATED	0x0002
+#define CF_RESTRICTED	0x0004
+#define CF_CILENT		0x0008
+#define CF_SYSTEM		0x0010
+#define CF_PRODUCTSPEC	0x0020
+#define CF_GLOBAL		0x1000
+
+
+// == Custom defines ==
+#define UCF_OLSAUTH		0x10000000   // BrokenSHA1 Logon
+#define UCF_NLSAUTH		0x20000000   // BnetSRP3 Logon
+
+
+#endif // _BNETDEFS_H_

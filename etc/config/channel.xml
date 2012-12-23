@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Channels>
+	<Channel
+		name = "Warcraft III"
+		short = "W3"
+		gameId = "W3XP"
+		maxUser = "100"
+		byCountry = "1"
+		byIndex = "1"
+		flag = "1"
+		/>
+
+	<Channel
+		name = "Chat"
+		short = "CHAT"
+		gameId = ""
+		maxUser = "100"
+		byCountry = "0"
+		byIndex = "0"
+		flag = "1"
+		/>
+</Channels>
