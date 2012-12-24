@@ -14,9 +14,7 @@ namespace Packets
 			std::vector<byte>& data = ptr->GetData();
 			if(data.size() == 0 || offset >= data.size())
 				return false;
-			if(fileTime == 0)
-				fileTime = ptr->GetFileTime();
-			_packet << (uint)0 << (ptr->GetSize() - offset) << adid << extag << fileTime << fileName.c_str();
+			_packet << (uint)0 << (ptr->GetSize() - offset) << adid << extag << ptr->GetFileTime() << fileName.c_str();
 			*(uint *)&_packet[0] = _packet.size();
 			_packet.append(&data[offset], data.size() - offset);
 			return true;

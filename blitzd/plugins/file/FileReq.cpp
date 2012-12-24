@@ -10,8 +10,8 @@ namespace Plugins
 		{
 			uint plat, prod;
 			Packets::File::FileHeader packet;
-			packet.fileTime = 0;
-			st >> plat >> prod >> packet.adid >> packet.extag >> packet.offset >> packet.fileTime >> packet.fileName;
+			uint64 ft;
+			st >> plat >> prod >> packet.adid >> packet.extag >> packet.offset >> ft >> packet.fileName;
 			LOG_DEBUG(("Requesting file %s...", packet.fileName.c_str()));
 			packet.BuildAndSendTo(cl);
 			return true;

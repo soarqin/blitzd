@@ -9,8 +9,8 @@ namespace Plugins
 		bool RawReq::Process( Network::TcpClient& cl, Utils::Stream& st )
 		{
 			Packets::File::FileHeader packet;
-			packet.fileTime = 0;
-			st >> packet.offset >> packet.fileTime;
+			uint64 ft;
+			st >> packet.offset >> ft;
 			st += 40;
 			st >> packet.fileName;
 			packet.adid = 0;

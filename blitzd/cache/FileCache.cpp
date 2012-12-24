@@ -33,7 +33,7 @@ namespace Cache
 			ptr->_ft = 0;
 #else
 		struct stat st;
-		if(stat(n.c_str(), &st))
+		if(stat(n.c_str(), &st) == 0)
 			ptr->_ft = Utils::Timestamp::fromEpochTime(st.st_mtime).fileTime();
 		else
 			ptr->_ft = 0;
