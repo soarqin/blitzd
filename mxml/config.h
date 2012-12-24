@@ -42,7 +42,9 @@
 #include <string.h>
 #include <stdarg.h>
 #include <ctype.h>
+#ifdef _MSC_VER
 #include <io.h>
+#endif
 
 
 /*
@@ -75,7 +77,7 @@
  * Inline function support...
  */
 
-#define inline _inline
+// #define inline _inline
 
 
 /*

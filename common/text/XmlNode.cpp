@@ -1,7 +1,7 @@
 #include "Config.h"
 #include "XmlNode.h"
 #include "utils/File.h"
-#include "mxml/mxml.h"
+#include <mxml.h>
 #include <cstdlib>
 
 namespace Text

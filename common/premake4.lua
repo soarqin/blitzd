@@ -5,6 +5,9 @@ project "common"
     includedirs { "..", "." }
     configuration "vs*"
         includedirs "../libevent/include"
+    configuration "not vs*"
+	buildoptions { "-std=c++11" }
+	linkoptions { "-std=c++11" }
     configuration "vs* or codeblocks"
         files { "../Config.cpp", "../Config.h" }
         pchsource "../Config.cpp"

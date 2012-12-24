@@ -46,18 +46,19 @@ namespace Network
 		_base = svr->_base;
 		_host = svr;
 
-		struct event * ev = (struct event *)_MEM.Alloc(sizeof(struct event));
+		struct event * ev = event_new(_base, _fd, EV_READ, _client_read_cb, this);
+		if(ev == NULL)
+			return;
+		struct event * ev2 = event_new(_base, _fd, EV_WRITE, _client_write_cb, this);
+		if(ev2 == NULL)
+		{
+			event_free(ev2);
+			return;
+		}
 		_r_event = (void *)ev;
+		_w_event = (void *)ev2;
 
-		event_set(ev, _fd, EV_READ, _client_read_cb, this);
-		event_base_set(_base, ev);
 		event_add(ev, NULL);
-
-		ev = (struct event *)_MEM.Alloc(sizeof(struct event));
-		_w_event = (void *)ev;
-
-		event_set(ev, _fd, EV_WRITE, _client_write_cb, this);
-		event_base_set(_base, ev);
 
 		if(add)
 			svr->AddSocket(this);

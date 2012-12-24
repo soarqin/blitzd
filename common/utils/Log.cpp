@@ -35,7 +35,7 @@ namespace Utils
 
 			m_fout = CreateFileA("CONOUT$", GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL/* | FILE_FLAG_WRITE_THROUGH*/, NULL);
 #else
-			m_fout = freopen("CONOUT$","w+t", stdout);
+			m_fout = stdout;
 			setvbuf(m_fout, NULL, _IONBF, 0);
 #endif
 		}
@@ -58,8 +58,6 @@ namespace Utils
 #ifdef _WIN32
 			CloseHandle(m_fout);
 			FreeConsole();
-#else
-			fclose(m_fout);
 #endif
 		}
 		else

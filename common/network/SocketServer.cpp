@@ -218,9 +218,7 @@ namespace Network
 
 	void SocketServer::RegisterTimer( uint tm, SocketServer::ITimer * timer )
 	{
-		timer->_event = (struct event *)_MEM.Alloc(sizeof(struct event));
-		evtimer_set(timer->_event, _timer_cb, timer);
-		event_base_set(_base, timer->_event);
+		timer->_event = event_new(_base, -1, EV_PERSIST, _timer_cb, timer);
 		timer->_tv.tv_sec = tm / 1000;
 		timer->_tv.tv_usec = (tm % 1000) * 1000;
 		evtimer_add(timer->_event, &timer->_tv);
@@ -240,14 +238,9 @@ namespace Network
 
 	bool SocketServer::AddListener( ushort port )
 	{
-		struct event * _listen_event = (struct event *)_MEM.Alloc(sizeof(struct event));
-		if(_listen_event == NULL)
-			return false;
-
 		int fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if(fd == -1)
 		{
-			_MEM.Free(_listen_event);
 			return false;
 		}
 
@@ -259,12 +252,16 @@ namespace Network
 		addr.sin_addr.s_addr = INADDR_ANY;
 		if(SOCKET_ERROR == ::bind( fd, (sockaddr *)&addr, sizeof( addr )) || SOCKET_ERROR == listen( fd, 20 ))
 		{
-			_MEM.Free(_listen_event);
+			close(fd);
+			return false;
+		}
+		struct event * _listen_event = event_new(_base, fd, EV_READ | EV_WRITE | EV_PERSIST, _listen_cb, this);
+		if(_listen_event == NULL)
+		{
+			close(fd);
 			return false;
 		}
 
-		event_set(_listen_event, fd, EV_READ | EV_WRITE | EV_PERSIST, _listen_cb, this);
-		event_base_set(_base, _listen_event);
 		event_add(_listen_event, NULL);
 
 		_fd_listen.push_back(fd);

@@ -10,9 +10,11 @@ project "blitzd"
         pchsource "../Config.cpp"
         pchheader "Config.h"
     configuration "vs*"
-        includedirs { "../zlib", "../libevent", "../sqlite3", "../prebuilt/include" }
+        includedirs { "../zlib", "../libevent", "../sqlite3", "../mxml", "../prebuilt/include" }
         links { "zlib", "mpir" }
     configuration "not vs*"
+	buildoptions { "-std=c++11" }
+	linkoptions { "-std=c++11" }
         links { "gmp", "z" }
     configuration "windows"
         links { "ws2_32", "mswsock", "kernel32", "user32" }

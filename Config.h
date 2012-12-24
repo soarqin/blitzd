@@ -59,6 +59,7 @@ typedef int socklen_t;
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <unistd.h>
 #ifndef SOCKET_ERROR
 #define SOCKET_ERROR (-1)
 #endif

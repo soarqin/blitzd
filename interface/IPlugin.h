@@ -13,6 +13,7 @@ namespace Interface
 		public Utils::SharedClass<IPlugin>
 	{
 	public:
+		virtual ~IPlugin() {}
 		virtual ushort GetOP() = 0;
 		virtual bool Process(Network::TcpClient&, Utils::Stream&) = 0;
 		virtual bool Process(Network::UdpSocket&, uint ip, ushort port, Utils::Stream&) = 0;
