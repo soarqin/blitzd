@@ -23,7 +23,6 @@ namespace Cache
 		char __formula[1024];
 		sprintf(__formula, "A=%u B=%u C=%u 4 A=A%cS B=B%cC C=C%cA A=A%cB", a, b, c, rop[rop1], rop[rop2], rop[rop3], rop[rop4]);
 		_formula = __formula;
-		_formula = "A=418025954 B=402661753 C=1258758744 4 A=A+S B=B^C C=C-A A=A-B";
 		LOG_DEBUG(("Generated formula: %s", __formula));
 
 		Text::XmlNode cfg_((Core::cfg.GetCfgDir() + "/" + Core::cfg.GetCheckRevFile()).c_str());

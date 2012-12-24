@@ -30,7 +30,7 @@ namespace Core
 		signal(SIGTERM, &sigbreak);
 		signal(SIGBREAK, &sigbreak);
 
-		cfg.Load("blitzd.xml");
+		cfg.Load("BlitzD.xml");
 
 		Storage::Storage::SetEngine(cfg.GetDBEngine().c_str());
 		Storage::storage->Open(cfg.GetDBFile().c_str());
