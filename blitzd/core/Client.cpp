@@ -184,6 +184,8 @@ namespace Core
 			case FILERAW:
 				{
 					size = sbuf.length();
+					if(size < 53)
+						return;
 					byte * buf = new(std::nothrow) byte[size];
 					if(buf == NULL)
 					{
