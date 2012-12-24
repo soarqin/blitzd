@@ -5,10 +5,6 @@
 #include "utils/Stream.h"
 #include <zlib.h>
 
-#ifdef _MSC_VER
-#pragma comment(lib, "../zlib/zlib.lib")
-#endif
-
 namespace Games
 {
 	namespace War3

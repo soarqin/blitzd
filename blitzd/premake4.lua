@@ -3,22 +3,20 @@ project "blitzd"
 
     files { "**.cpp", "**.h" }
     includedirs { "..", ".", "../common" }
-    links { "common", "interface", "mxml", "sqlite3", "event" }
+    links { "common", "interface", "event", "mxml", "sqlite3" }
 
     configuration "vs* or codeblocks"
         files { "../Config.cpp", "../Config.h" }
         pchsource "../Config.cpp"
         pchheader "Config.h"
     configuration "vs*"
-	includedirs { "../gmp" }
-    configuration { "windows", "not vs*" }
-	libdirs {"../zlib" }
+        includedirs { "../zlib", "../libevent", "../sqlite3", "../prebuilt/include" }
+        links { "zlib", "mpir" }
     configuration "not vs*"
         links { "gmp", "z" }
     configuration "windows"
-	includedirs { "../zlib" }
         links { "ws2_32", "mswsock", "kernel32", "user32" }
     configuration { "Debug", "vs*" }
-        links { "../zlib/zlibd" }
+        libdirs {"../prebuilt/lib/Debug"}
     configuration { "Release", "vs*" }
-        links { "../zlib/zlib" }
+        libdirs {"../prebuilt/lib/Release"}

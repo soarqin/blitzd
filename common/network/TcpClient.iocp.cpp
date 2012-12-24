@@ -2,11 +2,6 @@
 #include "TcpClient.iocp.h"
 #include "SocketServer.iocp.h"
 #include "utils/Memory.h"
-#ifdef WIN32
-#include "../libevent/event.h"
-#else
-#include "event.h"
-#endif
 
 namespace Network
 {

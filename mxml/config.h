@@ -1,19 +1,17 @@
 /*
- * "$Id: config.h 387 2009-04-18 17:05:52Z mike $"
+ * "$Id: config.h 408 2010-09-19 05:26:46Z mike $"
  *
  * Configuration file for Mini-XML, a small XML-like file parsing library.
  *
- * Copyright 2003-2009 by Michael Sweet.
+ * Copyright 2003-2010 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
+ * These coded instructions, statements, and computer programs are the
+ * property of Michael R Sweet and are protected by Federal copyright
+ * law.  Distribution and use rights are outlined in the file "COPYING"
+ * which should have been included with this file.  If this file is
+ * missing or damaged, see the license at:
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *     http://www.minixml.org/
  */
 
 /*
@@ -27,43 +25,50 @@
  * yet another define (_CRT_SECURE_NO_WARNINGS) instead.  Bastards.
  */
 
+#ifndef _CRT_SECURE_NO_DEPRECATE
 #define _CRT_SECURE_NO_DEPRECATE
+#endif
+#ifndef _CRT_SECURE_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
+#endif
 
 
 /*
  * Include necessary headers...
  */
 
-#ifdef WIN32
-
-#include <windows.h>
-
-#define mxml_strtol _mxml_strtol
-#define mxml_strcmp lstrcmpA
-#define mxml_strcpy lstrcpyA
-#define mxml_strlen lstrlenA
-extern long _mxml_strtol(const char *, char **, int);
-
-#define mxml_sprintf wsprintfA
-
-#else
-
-#define mxml_strtol strtol
-#define mxml_strcmp strcmp
-#define mxml_strcpy strcpy
-#define mxml_strlen strlen
-#define mxml_sprintf sprintf
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <ctype.h>
+#include <io.h>
 
-#endif
+
+/*
+ * Microsoft also renames the POSIX functions to _name, and introduces
+ * a broken compatibility layer using the original names.  As a result,
+ * random crashes can occur when, for example, strdup() allocates memory
+ * from a different heap than used by malloc() and free().
+ *
+ * To avoid moronic problems like this, we #define the POSIX function
+ * names to the corresponding non-standard Microsoft names.
+ */
+
+#define close		_close
+#define open		_open
+#define read	        _read
+#define snprintf 	_snprintf
+#define strdup		_strdup
+#define vsnprintf 	_vsnprintf
+#define write		_write
+
 
 /*
  * Version number...
  */
 
-#define MXML_VERSION "Mini-XML v2.6"
+#define MXML_VERSION "Mini-XML v2.7"
 
 
 /*
@@ -81,10 +86,18 @@ extern long _mxml_strtol(const char *, char **, int);
 
 
 /*
+ * Do we have the snprintf() and vsnprintf() functions?
+ */
+
+#define HAVE_SNPRINTF 1
+#define HAVE_VSNPRINTF 1
+
+
+/*
  * Do we have the strXXX() functions?
  */
 
-//#define HAVE_STRDUP 1
+#define HAVE_STRDUP 1
 
 
 /*
@@ -93,11 +106,22 @@ extern long _mxml_strtol(const char *, char **, int);
 
 #  ifndef HAVE_STRDUP
 extern char	*_mxml_strdup(const char *);
-#    define mxml_strdup _mxml_strdup
-#  else
-#    define mxml_strdup strdup
+#    define strdup _mxml_strdup
 #  endif /* !HAVE_STRDUP */
 
+extern char	*_mxml_strdupf(const char *, ...);
+extern char	*_mxml_vstrdupf(const char *, va_list);
+
+#  ifndef HAVE_SNPRINTF
+extern int	_mxml_snprintf(char *, size_t, const char *, ...);
+#    define snprintf _mxml_snprintf
+#  endif /* !HAVE_SNPRINTF */
+
+#  ifndef HAVE_VSNPRINTF
+extern int	_mxml_vsnprintf(char *, size_t, const char *, va_list);
+#    define vsnprintf _mxml_vsnprintf
+#  endif /* !HAVE_VSNPRINTF */
+
 /*
- * End of "$Id: config.h 387 2009-04-18 17:05:52Z mike $".
+ * End of "$Id: config.h 408 2010-09-19 05:26:46Z mike $".
  */

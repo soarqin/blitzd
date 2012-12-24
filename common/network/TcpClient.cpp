@@ -9,11 +9,7 @@
 #include "TcpClient.h"
 #include "SocketServer.h"
 #include "utils/Memory.h"
-#ifdef WIN32
-#include "../libevent/event.h"
-#else
-#include "event.h"
-#endif
+#include <event2/event.h>
 
 namespace Network
 {

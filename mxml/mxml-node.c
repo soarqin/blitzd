@@ -1,37 +1,36 @@
 /*
- * "$Id: mxml-node.c 363 2008-10-26 18:28:05Z mike $"
+ * "$Id: mxml-node.c 436 2011-01-22 01:02:05Z mike $"
  *
  * Node support code for Mini-XML, a small XML-like file parsing library.
  *
- * Copyright 2003-2007 by Michael Sweet.
+ * Copyright 2003-2011 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
+ * These coded instructions, statements, and computer programs are the
+ * property of Michael R Sweet and are protected by Federal copyright
+ * law.  Distribution and use rights are outlined in the file "COPYING"
+ * which should have been included with this file.  If this file is
+ * missing or damaged, see the license at:
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *     http://www.minixml.org/
  *
  * Contents:
  *
- *   mxmlAdd()        - Add a node to a tree.
- *   mxmlDelete()     - Delete a node and all of its children.
- *   mxmlNewCDATA()   - Create a new CDATA node.
- *   mxmlNewCustom()  - Create a new custom data node.
- *   mxmlNewElement() - Create a new element node.
- *   mxmlNewInteger() - Create a new integer node.
- *   mxmlNewOpaque()  - Create a new opaque string.
- *   mxmlNewReal()    - Create a new real number node.
- *   mxmlNewText()    - Create a new text fragment node.
- *   mxmlNewTextf()   - Create a new formatted text fragment node.
- *   mxmlNewXML()     - Create a new XML document tree.
- *   mxmlRelease()    - Release a node.
- *   mxmlRemove()     - Remove a node from its parent.
- *   mxmlRetain()     - Retain a node.
- *   mxml_new()       - Create a new node.
+ *   mxmlAdd()         - Add a node to a tree.
+ *   mxmlDelete()      - Delete a node and all of its children.
+ *   mxmlGetRefCount() - Get the current reference (use) count for a node.
+ *   mxmlNewCDATA()    - Create a new CDATA node.
+ *   mxmlNewCustom()   - Create a new custom data node.
+ *   mxmlNewElement()  - Create a new element node.
+ *   mxmlNewInteger()  - Create a new integer node.
+ *   mxmlNewOpaque()   - Create a new opaque string.
+ *   mxmlNewReal()     - Create a new real number node.
+ *   mxmlNewText()     - Create a new text fragment node.
+ *   mxmlNewTextf()    - Create a new formatted text fragment node.
+ *   mxmlRemove()      - Remove a node from its parent.
+ *   mxmlNewXML()      - Create a new XML document tree.
+ *   mxmlRelease()     - Release a node.
+ *   mxmlRetain()      - Retain a node.
+ *   mxml_new()        - Create a new node.
  */
 
 /*
@@ -232,19 +231,19 @@ mxmlDelete(mxml_node_t *node)		/* I - Node to delete */
   {
     case MXML_ELEMENT :
         if (node->value.element.name)
-	  mxml_free(node->value.element.name);
+	  free(node->value.element.name);
 
 	if (node->value.element.num_attrs)
 	{
 	  for (i = 0; i < node->value.element.num_attrs; i ++)
 	  {
 	    if (node->value.element.attrs[i].name)
-	      mxml_free(node->value.element.attrs[i].name);
+	      free(node->value.element.attrs[i].name);
 	    if (node->value.element.attrs[i].value)
-	      mxml_free(node->value.element.attrs[i].value);
+	      free(node->value.element.attrs[i].value);
 	  }
 
-          mxml_free(node->value.element.attrs);
+          free(node->value.element.attrs);
 	}
         break;
     case MXML_INTEGER :
@@ -252,14 +251,14 @@ mxmlDelete(mxml_node_t *node)		/* I - Node to delete */
         break;
     case MXML_OPAQUE :
         if (node->value.opaque)
-	  mxml_free(node->value.opaque);
+	  free(node->value.opaque);
         break;
     case MXML_REAL :
        /* Nothing to do */
         break;
     case MXML_TEXT :
         if (node->value.text.string)
-	  mxml_free(node->value.text.string);
+	  free(node->value.text.string);
         break;
     case MXML_CUSTOM :
         if (node->value.custom.data &&
@@ -274,7 +273,76 @@ mxmlDelete(mxml_node_t *node)		/* I - Node to delete */
   * Free this node...
   */
 
-  mxml_free(node);
+  free(node);
+}
+
+
+/*
+ * 'mxmlGetRefCount()' - Get the current reference (use) count for a node.
+ *
+ * The initial reference count of new nodes is 1. Use the @link mxmlRetain@
+ * and @link mxmlRelease@ functions to increment and decrement a node's
+ * reference count.
+ *
+ * @since Mini-XML 2.7@.
+ */
+
+int					/* O - Reference count */
+mxmlGetRefCount(mxml_node_t *node)	/* I - Node */
+{
+ /*
+  * Range check input...
+  */
+
+  if (!node)
+    return (0);
+
+ /*
+  * Return the reference count...
+  */
+
+  return (node->ref_count);
+}
+
+
+/*
+ * 'mxmlNewCDATA()' - Create a new CDATA node.
+ *
+ * The new CDATA node is added to the end of the specified parent's child
+ * list. The constant MXML_NO_PARENT can be used to specify that the new
+ * CDATA node has no parent. The data string must be nul-terminated and
+ * is copied into the new node. CDATA nodes use the MXML_ELEMENT type.
+ *
+ * @since Mini-XML 2.3@
+ */
+
+mxml_node_t *				/* O - New node */
+mxmlNewCDATA(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+	     const char  *data)		/* I - Data string */
+{
+  mxml_node_t	*node;			/* New node */
+
+
+#ifdef DEBUG
+  fprintf(stderr, "mxmlNewCDATA(parent=%p, data=\"%s\")\n",
+          parent, data ? data : "(null)");
+#endif /* DEBUG */
+
+ /*
+  * Range check input...
+  */
+
+  if (!data)
+    return (NULL);
+
+ /*
+  * Create the node and set the name value...
+  */
+
+  if ((node = mxml_new(parent, MXML_ELEMENT)) != NULL)
+    node->value.element.name = _mxml_strdupf("![CDATA[%s]]", data);
+
+  return (node);
 }
 
 
@@ -349,7 +417,7 @@ mxmlNewElement(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
   */
 
   if ((node = mxml_new(parent, MXML_ELEMENT)) != NULL)
-    node->value.element.name = mxml_strdup(name);
+    node->value.element.name = strdup(name);
 
   return (node);
 }
@@ -418,7 +486,7 @@ mxmlNewOpaque(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
   */
 
   if ((node = mxml_new(parent, MXML_OPAQUE)) != NULL)
-    node->value.opaque = mxml_strdup(opaque);
+    node->value.opaque = strdup(opaque);
 
   return (node);
 }
@@ -491,7 +559,57 @@ mxmlNewText(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
   if ((node = mxml_new(parent, MXML_TEXT)) != NULL)
   {
     node->value.text.whitespace = whitespace;
-    node->value.text.string     = mxml_strdup(string);
+    node->value.text.string     = strdup(string);
+  }
+
+  return (node);
+}
+
+
+/*
+ * 'mxmlNewTextf()' - Create a new formatted text fragment node.
+ *
+ * The new text node is added to the end of the specified parent's child
+ * list. The constant MXML_NO_PARENT can be used to specify that the new
+ * text node has no parent. The whitespace parameter is used to specify
+ * whether leading whitespace is present before the node. The format
+ * string must be nul-terminated and is formatted into the new node.  
+ */
+
+mxml_node_t *				/* O - New node */
+mxmlNewTextf(mxml_node_t *parent,	/* I - Parent node or MXML_NO_PARENT */
+             int         whitespace,	/* I - 1 = leading whitespace, 0 = no whitespace */
+	     const char  *format,	/* I - Printf-style frmat string */
+	     ...)			/* I - Additional args as needed */
+{
+  mxml_node_t	*node;			/* New node */
+  va_list	ap;			/* Pointer to arguments */
+
+
+#ifdef DEBUG
+  fprintf(stderr, "mxmlNewTextf(parent=%p, whitespace=%d, format=\"%s\", ...)\n",
+          parent, whitespace, format ? format : "(null)");
+#endif /* DEBUG */
+
+ /*
+  * Range check input...
+  */
+
+  if (!format)
+    return (NULL);
+
+ /*
+  * Create the node and set the text value...
+  */
+
+  if ((node = mxml_new(parent, MXML_TEXT)) != NULL)
+  {
+    va_start(ap, format);
+
+    node->value.text.whitespace = whitespace;
+    node->value.text.string     = _mxml_vstrdupf(format, ap);
+
+    va_end(ap);
   }
 
   return (node);
@@ -580,7 +698,7 @@ mxmlNewXML(const char *version)		/* I - Version number to use */
   char	element[1024];			/* Element text */
 
 
-  mxml_sprintf(element, "?xml version=\"%s\" encoding=\"utf-8\"?",
+  snprintf(element, sizeof(element), "?xml version=\"%s\" encoding=\"utf-8\"?",
            version ? version : "1.0");
 
   return (mxmlNewElement(NULL, element));
@@ -649,7 +767,7 @@ mxml_new(mxml_node_t *parent,		/* I - Parent node */
   * Allocate memory for the node...
   */
 
-  if ((node = mxml_calloc(1, sizeof(mxml_node_t))) == NULL)
+  if ((node = calloc(1, sizeof(mxml_node_t))) == NULL)
   {
 #if DEBUG > 1
     fputs("    returning NULL\n", stderr);
@@ -685,5 +803,5 @@ mxml_new(mxml_node_t *parent,		/* I - Parent node */
 
 
 /*
- * End of "$Id: mxml-node.c 363 2008-10-26 18:28:05Z mike $".
+ * End of "$Id: mxml-node.c 436 2011-01-22 01:02:05Z mike $".
  */

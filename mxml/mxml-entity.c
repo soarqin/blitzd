@@ -1,20 +1,18 @@
 /*
- * "$Id: mxml-entity.c 385 2009-03-19 05:38:52Z mike $"
+ * "$Id: mxml-entity.c 408 2010-09-19 05:26:46Z mike $"
  *
  * Character entity support code for Mini-XML, a small XML-like
  * file parsing library.
  *
- * Copyright 2003-2009 by Michael Sweet.
+ * Copyright 2003-2010 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
+ * These coded instructions, statements, and computer programs are the
+ * property of Michael R Sweet and are protected by Federal copyright
+ * law.  Distribution and use rights are outlined in the file "COPYING"
+ * which should have been included with this file.  If this file is
+ * missing or damaged, see the license at:
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *     http://www.minixml.org/
  *
  * Contents:
  *
@@ -435,7 +433,7 @@ _mxml_entity_cb(const char *name)	/* I - Entity name */
   {
     current = (first + last) / 2;
 
-    if ((diff = mxml_strcmp(name, entities[current].name)) == 0)
+    if ((diff = strcmp(name, entities[current].name)) == 0)
       return (entities[current].val);
     else if (diff < 0)
       last = current;
@@ -448,9 +446,9 @@ _mxml_entity_cb(const char *name)	/* I - Entity name */
   * a match; check first and last...
   */
 
-  if (!mxml_strcmp(name, entities[first].name))
+  if (!strcmp(name, entities[first].name))
     return (entities[first].val);
-  else if (!mxml_strcmp(name, entities[last].name))
+  else if (!strcmp(name, entities[last].name))
     return (entities[last].val);
   else
     return (-1);
@@ -458,5 +456,5 @@ _mxml_entity_cb(const char *name)	/* I - Entity name */
 
 
 /*
- * End of "$Id: mxml-entity.c 385 2009-03-19 05:38:52Z mike $".
+ * End of "$Id: mxml-entity.c 408 2010-09-19 05:26:46Z mike $".
  */

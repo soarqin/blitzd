@@ -1,0 +1,8 @@
+Used libraries are listed below:
+
+gmp:      http://gmplib.org/       (non-win32 only)
+MPIR:     http://www.mpir.org/     (win32 only)
+libevent: http://libevent.org/     (source codes are included for win32 build)
+zlib:     http://zlib.net/         (source codes are included for win32 build)
+minixml:  http://www.minixml.org/  (source codes are included in the project)
+sqlite:   http://www.sqlite.org/   (source codes are included for win32 build)

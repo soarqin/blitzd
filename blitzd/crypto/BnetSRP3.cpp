@@ -2,11 +2,6 @@
 
 #include "BnetSRP3.h"
 
-#ifdef _MSC_VER
-#pragma comment(lib, "../gmp/libgmp.a")
-#pragma comment(lib, "../gmp/libgcc.a")
-#endif
-
 namespace Crypto
 {
 	bool BnetSRP3::srp3_inited = false;

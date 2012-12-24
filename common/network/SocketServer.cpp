@@ -10,8 +10,8 @@
 #include "TcpClient.h"
 #include "utils/Memory.h"
 #include "utils/Runnable.h"
+#include <event2/event.h>
 #ifdef WIN32
-#include "../libevent/event.h"
 
 #include <DbgHelp.h>
 
@@ -48,8 +48,6 @@ void CreateMiniDump( LPEXCEPTION_POINTERS lpExceptionInfo) {
     }
 }
 
-#else
-#include "event.h"
 #endif
 
 namespace Network

@@ -1,31 +1,20 @@
 /*
- * "$Id: mxml-index.c 184 2005-01-29 07:21:44Z mike $"
+ * "$Id: mxml-index.c 426 2011-01-01 23:42:17Z mike $"
  *
  * Index support code for Mini-XML, a small XML-like file parsing library.
  *
- * Copyright 2003-2005 by Michael Sweet.
+ * Copyright 2003-2011 by Michael R Sweet.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2, or (at your option) any later version.
+ * These coded instructions, statements, and computer programs are the
+ * property of Michael R Sweet and are protected by Federal copyright
+ * law.  Distribution and use rights are outlined in the file "COPYING"
+ * which should have been included with this file.  If this file is
+ * missing or damaged, see the license at:
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *     http://www.minixml.org/
  *
  * Contents:
  *
- *   mxmlIndexDelete()   - Delete an index.
- *   mxmlIndexEnum()     - Return the next node in the index.
- *   mxmlIndexFind()     - Find the next matching node.
- *   mxmlIndexNew()      - Create a new index.
- *   mxmlIndexReset()    - Reset the enumeration/find pointer in the index and
- *                         return the first node in the index.
- *   index_compare()     - Compare two nodes.
- *   index_find()        - Compare a node with index values.
- *   index_sort()        - Sort the nodes in the index...
  */
 
 /*
@@ -34,7 +23,6 @@
 
 #include "config.h"
 #include "mxml.h"
-#include "errno.h"
 
 
 /*
@@ -67,12 +55,12 @@ mxmlIndexDelete(mxml_index_t *ind)	/* I - Index to delete */
   */
 
   if (ind->attr)
-    mxml_free(ind->attr);
+    free(ind->attr);
 
   if (ind->alloc_nodes)
-    mxml_free(ind->nodes);
+    free(ind->nodes);
 
-  mxml_free(ind);
+  free(ind);
 }
 
 
@@ -286,6 +274,30 @@ mxmlIndexFind(mxml_index_t *ind,	/* I - Index to search */
 
 
 /*
+ * 'mxmlIndexGetCount()' - Get the number of nodes in an index.
+ *
+ * @since Mini-XML 2.7@
+ */
+
+int					/* I - Number of nodes in index */
+mxmlIndexGetCount(mxml_index_t *ind)	/* I - Index of nodes */
+{
+ /*
+  * Range check input...
+  */
+
+  if (!ind)
+    return (0);
+
+ /*
+  * Return the number of nodes in the index...
+  */
+
+  return (ind->num_nodes);
+}
+
+
+/*
  * 'mxmlIndexNew()' - Create a new index.
  *
  * The index will contain all nodes that contain the named element and/or
@@ -321,7 +333,7 @@ mxmlIndexNew(mxml_node_t *node,		/* I - XML node tree */
   * Create a new index...
   */
 
-  if ((ind = mxml_calloc(1, sizeof(mxml_index_t))) == NULL)
+  if ((ind = calloc(1, sizeof(mxml_index_t))) == NULL)
   {
     mxml_error("Unable to allocate %d bytes for index - %s",
                sizeof(mxml_index_t), strerror(errno));
@@ -329,7 +341,7 @@ mxmlIndexNew(mxml_node_t *node,		/* I - XML node tree */
   }
 
   if (attr)
-    ind->attr = mxml_strdup(attr);
+    ind->attr = strdup(attr);
 
   if (!element && !attr)
     current = node;
@@ -341,9 +353,9 @@ mxmlIndexNew(mxml_node_t *node,		/* I - XML node tree */
     if (ind->num_nodes >= ind->alloc_nodes)
     {
       if (!ind->alloc_nodes)
-        temp = mxml_malloc(64 * sizeof(mxml_node_t *));
+        temp = malloc(64 * sizeof(mxml_node_t *));
       else
-        temp = mxml_realloc(ind->nodes, (ind->alloc_nodes + 64) * sizeof(mxml_node_t *));
+        temp = realloc(ind->nodes, (ind->alloc_nodes + 64) * sizeof(mxml_node_t *));
 
       if (!temp)
       {
@@ -500,7 +512,7 @@ index_compare(mxml_index_t *ind,	/* I - Index */
   * Check the element name...
   */
 
-  if ((diff = mxml_strcmp(first->value.element.name,
+  if ((diff = strcmp(first->value.element.name,
                      second->value.element.name)) != 0)
     return (diff);
 
@@ -510,7 +522,7 @@ index_compare(mxml_index_t *ind,	/* I - Index */
 
   if (ind->attr)
   {
-    if ((diff = mxml_strcmp(mxmlElementGetAttr(first, ind->attr),
+    if ((diff = strcmp(mxmlElementGetAttr(first, ind->attr),
                        mxmlElementGetAttr(second, ind->attr))) != 0)
       return (diff);
   }
@@ -542,7 +554,7 @@ index_find(mxml_index_t *ind,		/* I - Index */
 
   if (element)
   {
-    if ((diff = mxml_strcmp(element, node->value.element.name)) != 0)
+    if ((diff = strcmp(element, node->value.element.name)) != 0)
       return (diff);
   }
 
@@ -552,7 +564,7 @@ index_find(mxml_index_t *ind,		/* I - Index */
 
   if (value)
   {
-    if ((diff = mxml_strcmp(value, mxmlElementGetAttr(node, ind->attr))) != 0)
+    if ((diff = strcmp(value, mxmlElementGetAttr(node, ind->attr))) != 0)
       return (diff);
   }
 
@@ -646,5 +658,5 @@ index_sort(mxml_index_t *ind,		/* I - Index to sort */
 
 
 /*
- * End of "$Id: mxml-index.c 184 2005-01-29 07:21:44Z mike $".
+ * End of "$Id: mxml-index.c 426 2011-01-01 23:42:17Z mike $".
  */

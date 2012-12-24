@@ -1,11 +1,6 @@
 #include "Config.h"
 #include "UdpSocket.iocp.h"
 #include "utils/Runnable.h"
-#ifdef WIN32
-#include "../libevent/event.h"
-#else
-#include "event.h"
-#endif
 
 namespace Network
 {
