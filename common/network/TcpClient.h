@@ -1,12 +1,6 @@
 #ifndef _TCPCLIENT_H_
 #define _TCPCLIENT_H_
 
-#if defined(WIN32) && defined(USE_IOCP)
-
-#include "TcpClient.iocp.h"
-
-#else
-
 #include "SocketBase.h"
 
 namespace Network
@@ -21,28 +15,22 @@ namespace Network
 		void Send(const byte * data, size_t len);
 		void PendClose();
 	protected:
-		virtual void OnRecv(byte * data, size_t len) {}
-	private:
-#pragma pack(push, 4)
-		typedef struct
-#ifdef __GNUC__
-			__attribute__((aligned(4)))
-#endif
-		{
-			uint len;
-			byte buf[1];
-		} _packet_t;
-#pragma pack(pop)
-		bool _pend_close;
-		size_t _send_pos;
-		std::queue<_packet_t *> _send_queue;
+		virtual void OnRecv(SocketBuf&) {}
 
-		void ClearSendQueue();
-		virtual void _DoRecv();
-		virtual void _DoSend();
+		virtual void DoRecv();
+		virtual void DoSend();
+		virtual void DoDisconnect();
+		virtual bool DoRegister();
+
+	private:
+		static void _client_write_cb(struct bufferevent *, void *);
+		static void _client_read_cb(struct bufferevent *, void *);
+		static void _client_event_cb(struct bufferevent *, short, void *);
+
+	private:
+		bool _pend_close;
+		struct bufferevent * _bufev;
 	};
 }
-
-#endif
 
 #endif // _TCPCLIENT_H_

@@ -1,11 +1,5 @@
 #include "Config.h"
 
-#if defined(WIN32) && defined(USE_IOCP)
-
-#include "SocketServer.iocp.cpp"
-
-#else
-
 #include "SocketServer.h"
 #include "TcpClient.h"
 #include "utils/Memory.h"
@@ -184,11 +178,11 @@ namespace Network
 		int new_fd = accept(fd, (sockaddr *)&addr, &size);
 		if(new_fd == -1)
 			return;
-		evutil_make_socket_nonblocking(fd);
 		TcpClient * cl = OnNewTcpClient(new_fd);
 		if(cl != NULL)
 		{
-			cl->_Register(this);
+			if(!cl->_Register(this))
+				delete cl;
 		}
 	}
 
@@ -270,5 +264,3 @@ namespace Network
 		return true;
 	}
 }
-
-#endif

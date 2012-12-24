@@ -43,35 +43,36 @@ namespace Core
 			clientPool.Remove(_session);
 	}
 
-	void Client::OnRecv( byte * buf, size_t len )
+	void Client::OnRecv( Network::SocketBuf& sbuf )
 	{
+		size_t len = sbuf.length();
 		if(len == 0)
 			return;
 		if(_stage == CONNECTED)
 		{
-			ushort op = buf[0];
+			byte op;
+			sbuf.read(&op, 1);
 			Utils::Stream st;
 			Plugins::Init::PluginInit::GetSingleton().Process(*this, op, st);
-			++ buf;
-			-- len;
+			len = sbuf.length();
 			if(len == 0)
 				return;
 		}
-		_buffer.append(buf, len);
 		switch(_stage)
 		{
 		case BNET:
-			ProcessBNet();
+			ProcessBNet(sbuf);
 			break;
 		case BNET_LOGGEDIN:
-			ProcessBNetLoggedIn();
+			ProcessBNetLoggedIn(sbuf);
 			break;
 		case FILETRANS:
 		case FILERAW:
-			ProcessFile();
+			ProcessFile(sbuf);
 			break;
 		case BAAL:
-			ProcessBaal();
+			ProcessBaal(sbuf);
+			break;
         default:
             break;
 		}
@@ -99,64 +100,100 @@ namespace Core
 		}
 	}
 
-	void Client::ProcessBNet()
+	void Client::ProcessBNet(Network::SocketBuf& sbuf)
 	{
 		size_t size;
-		ushort psize;
-		while((size = _buffer.size()) >= 4 && (psize = *(ushort *)&_buffer[2]) <= size)
+		while((size = sbuf.length()) >= 4)
 		{
-			byte * buf = _buffer;
-			Utils::Stream st(buf + 4, psize - 4);
-			Plugins::BNet::PluginBNet::GetSingleton().Process(*this, *(ushort *)buf, st);
-			if(psize < size)
-				_buffer.pop_front(psize);
-			else
-				_buffer.clear();
+			uint hdr;
+			sbuf.copyout(&hdr, 4);
+			ushort psize = (ushort)((hdr & 0xFFFF0000) >> 16);
+			if(psize > size)
+				return;
+			psize -= 4;
+			sbuf.drain(4);
+			byte * buf = new(std::nothrow) byte[psize];
+			if(buf == NULL)
+			{
+				sbuf.drain(psize);
+				continue;
+			}
+			sbuf.read(buf, psize);
+			Utils::Stream st(buf, psize);
+			Plugins::BNet::PluginBNet::GetSingleton().Process(*this, (ushort)(hdr & 0xFFFF), st);
+			delete[] buf;
 		}
 	}
 
-	void Client::ProcessBNetLoggedIn()
+	void Client::ProcessBNetLoggedIn(Network::SocketBuf& sbuf)
 	{
 		size_t size;
-		ushort psize;
-		while((size = _buffer.size()) >= 4 && (psize = *(ushort *)&_buffer[2]) <= size)
+		while((size = sbuf.length()) >= 4)
 		{
-			byte * buf = _buffer;
-			Utils::Stream st(buf + 4, psize - 4);
-			Plugins::BNet::PluginBNetLoggedIn::GetSingleton().Process(*this, *(ushort *)buf, st);
-			if(psize < size)
-				_buffer.pop_front(psize);
-			else
-				_buffer.clear();
+			uint hdr;
+			sbuf.copyout(&hdr, 4);
+			ushort psize = (ushort)((hdr & 0xFFFF0000) >> 16);
+			if(psize > size)
+				return;
+			psize -= 4;
+			sbuf.drain(4);
+			byte * buf = new(std::nothrow) byte[psize];
+			if(buf == NULL)
+			{
+				sbuf.drain(psize);
+				continue;
+			}
+			sbuf.read(buf, psize);
+			Utils::Stream st(buf, psize);
+			Plugins::BNet::PluginBNetLoggedIn::GetSingleton().Process(*this, (ushort)(hdr & 0xFFFF), st);
+			delete[] buf;
 		}
 	}
 
-	void Client::ProcessFile()
+	void Client::ProcessFile(Network::SocketBuf& sbuf)
 	{
 		while(1)
 		{
 			size_t size;
-			ushort psize;
-			const byte * buf = _buffer;
 			switch(_stage)
 			{
 			case FILETRANS:
-				if((size = _buffer.size()) >= 2 && (psize = *(ushort *)buf) <= size)
+				if((size = sbuf.length()) >= 4)
 				{
-					Utils::Stream st(buf + 4, psize - 4);
-					Plugins::File::PluginFile::GetSingleton().Process(*this, *(ushort *)&buf[2], st);
-					if(psize < size)
-						_buffer.pop_front(psize);
-					else
-						_buffer.clear();
+					uint hdr;
+					sbuf.copyout(&hdr, 4);
+					ushort psize = (ushort)(hdr & 0xFFFF);
+					if(psize > size)
+						return;
+					sbuf.drain(4);
+					psize -= 4;
+					byte * buf = new(std::nothrow) byte[psize];
+					if(buf == NULL)
+					{
+						sbuf.drain(psize);
+						continue;
+					}
+					sbuf.read(buf, psize);
+					Utils::Stream st(buf, psize);
+					Plugins::File::PluginFile::GetSingleton().Process(*this, (ushort)((hdr & 0xFFFF0000) >> 16), st);
+					delete[] buf;
 				}
 				else
 					return;
 				break;
 			case FILERAW:
 				{
-					Utils::Stream st(buf, _buffer.size());
+					size = sbuf.length();
+					byte * buf = new(std::nothrow) byte[size];
+					if(buf == NULL)
+					{
+						sbuf.drain(size);
+						continue;
+					}
+					sbuf.read(buf, size);
+					Utils::Stream st(buf, size);
 					Plugins::File::PluginFile::GetSingleton().Process(*this, 0, st);
+					delete[] buf;
 				}
 				return;
             default:
@@ -165,19 +202,28 @@ namespace Core
 		}
 	}
 
-	void Client::ProcessBaal()
+	void Client::ProcessBaal(Network::SocketBuf& sbuf)
 	{
 		size_t size;
-		ushort psize;
-		while((size = _buffer.size()) >= 4 && (psize = *(ushort *)&_buffer[0]) <= size)
+		while((size = sbuf.length()) >= 4)
 		{
-			byte * buf = _buffer;
-			Utils::Stream st(buf + 4, psize - 4);
-			Plugins::Baal::PluginBaal::GetSingleton().Process(*this, *(ushort *)(buf + 2), st);
-			if(psize < size)
-				_buffer.pop_front(psize);
-			else
-				_buffer.clear();
+			uint hdr;
+			sbuf.copyout(&hdr, 4);
+			ushort psize = (ushort)(hdr & 0xFFFF);
+			if(psize > size)
+				return;
+			sbuf.drain(4);
+			psize -= 4;
+			byte * buf = new(std::nothrow) byte[psize];
+			if(buf == NULL)
+			{
+				sbuf.drain(psize);
+				continue;
+			}
+			sbuf.read(buf, psize);
+			Utils::Stream st(buf, psize);
+			Plugins::Baal::PluginBaal::GetSingleton().Process(*this, (ushort)((hdr & 0xFFFF0000) >> 16), st);
+			delete[] buf;
 		}
 	}
 

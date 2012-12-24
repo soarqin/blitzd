@@ -28,7 +28,7 @@ namespace Core
 		Client(int);
 		virtual ~Client();
 	protected:
-		virtual void OnRecv(byte *, size_t);
+		virtual void OnRecv(Network::SocketBuf&);
 
 	public:
 		void SetAuthInfo(uint platform, uint gameid, uint ver, uint gamelang, uint natip, uint timezone, uint locale, uint language, std::string& countryab, std::string& country);
@@ -71,14 +71,13 @@ namespace Core
 		void CheckEnd(uint);
 		void SendPing();
 	private:
-		void ProcessBNet();
-		void ProcessBNetLoggedIn();
-		void ProcessFile();
-		void ProcessBaal();
+		void ProcessBNet(Network::SocketBuf&);
+		void ProcessBNetLoggedIn(Network::SocketBuf&);
+		void ProcessFile(Network::SocketBuf&);
+		void ProcessBaal(Network::SocketBuf&);
 		void BuildStats();
 
 	private:
-		Utils::Stream _buffer;
 		Stage_t _stage;
 		uint _platform, _gameid, _version, _gamelang, _natip, _tzone, _locale, _language;
 		uint _gameIp;

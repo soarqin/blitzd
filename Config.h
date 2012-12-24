@@ -49,8 +49,6 @@ typedef int socklen_t;
 #endif
 #define SOCKET_ERRNO() WSAGetLastError()
 
-#define USE_IOCP
-
 #else
 
 #define SOCKET_ERRNO() (errno)

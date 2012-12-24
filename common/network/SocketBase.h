@@ -1,15 +1,10 @@
 #ifndef _SOCKETBASE_H_
 #define _SOCKETBASE_H_
 
-#if defined(WIN32) && defined(USE_IOCP)
-
-#include "SocketBase.iocp.h"
-
-#else
-
 #include "utils/SharedPtr.h"
 
-struct event_base;
+struct bufferevent;
+struct evbuffer;
 
 namespace Network
 {
@@ -24,22 +19,27 @@ namespace Network
 
 		void Close();
 		operator int() {return _fd;}
-		virtual void OnDisconnect() {}
+
+	protected:
+		bool _Register(SocketServer *, bool add = true);
+		virtual bool DoRegister() = 0;
+
 	protected:
 		int _fd;
-		struct event_base * _base;
-		void * _r_event, * _w_event;
 		SocketServer * _host;
+	};
 
-		void _Register(SocketServer *, bool add = true);
-		virtual void _DoRecv() = 0;
-		virtual void _DoSend() = 0;
-
-		static void _client_write_cb(int, short, void *);
-		static void _client_read_cb(int, short, void *);
+	class SocketBuf
+	{
+	public:
+		SocketBuf(struct evbuffer * bev): _bev(bev) { }
+		size_t length();
+		int copyout(void * data, size_t datlen);
+		int read(void * data, size_t datlen);
+		void drain(size_t datlen);
+	private:
+		struct evbuffer * _bev;
 	};
 }
-
-#endif
 
 #endif // _SOCKETBASE_H_

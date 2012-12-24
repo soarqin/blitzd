@@ -1,23 +1,23 @@
 #include "Config.h"
 
-#if defined(WIN32) && defined(USE_IOCP)
-
-#include "UdpSocket.iocp.cpp"
-
-#else
-
 #include "UdpSocket.h"
+#include "SocketServer.h"
 #include "utils/Runnable.h"
 #include <event2/event.h>
 
 namespace Network
 {
-	UdpSocket::UdpSocket()
+	UdpSocket::UdpSocket(): _ev(NULL)
 	{
 	}
 
 	UdpSocket::~UdpSocket()
 	{
+		if(_ev != NULL)
+		{
+			event_del(_ev);
+			event_free(_ev);
+		}
 	}
 
 	bool UdpSocket::Init( ushort port, SocketServer * host )
@@ -28,6 +28,7 @@ namespace Network
 			_fd = 0;
 			return false;
 		}
+		evutil_make_listen_socket_reuseable(_fd);
 		int bOptVal = 1;
 		setsockopt(_fd, SOL_SOCKET, SO_BROADCAST, (char*)&bOptVal, sizeof(int));
 		sockaddr_in addr = {0};
@@ -53,19 +54,14 @@ namespace Network
 	{
 		if(buffer.empty())
 			return;
-		_send_data_t data;
-		data.toip = ip;
-		data.toport = port;
-		data.buffer = buffer;
-		if(_packet_queue.empty())
-		{
-			struct event * ev = (struct event *)_w_event;
-			event_add(ev, NULL);
-		}
-		_packet_queue.push(data);
+		sockaddr_in addr = {0};
+		addr.sin_family = AF_INET;
+		addr.sin_port = htons(port);
+		addr.sin_addr.s_addr = htonl(ip);
+		sendto(_fd, (const char *)&buffer[0], (int)buffer.size(), 0, (const sockaddr *)&addr, sizeof(sockaddr_in));
 	}
 
-	void UdpSocket::_DoRecv()
+	void UdpSocket::DoRecv()
 	{
 		byte buf[2048];
 		sockaddr_in addr = {0};
@@ -83,26 +79,21 @@ namespace Network
 		{
 			OnRecv(ntohl(addr.sin_addr.s_addr), ntohs(addr.sin_port), buf, len);
 		}
-		event_add((struct event *)_r_event, NULL);
 	}
 
-	void UdpSocket::_DoSend()
+	bool UdpSocket::DoRegister()
 	{
-		while(!_packet_queue.empty())
-		{
-			_send_data_t& data = _packet_queue.front();
-			if(!data.buffer.empty())
-			{
-				sockaddr_in addr = {0};
-				addr.sin_family = AF_INET;
-				addr.sin_port = htons(data.toport);
-				addr.sin_addr.s_addr = htonl(data.toip);
-				if(sendto(_fd, (const char *)&data.buffer[0], (int)data.buffer.size(), 0, (const sockaddr *)&addr, sizeof(sockaddr_in)) <= 0)
-					break;
-			}
-			_packet_queue.pop();
-		}
+		struct event * ev = event_new(_host->_base, _fd, EV_READ | EV_PERSIST, _client_read_cb, this);
+		if(ev == NULL)
+			return false;
+		event_add(ev, NULL);
+		return true;
 	}
-}
 
-#endif
+	void UdpSocket::_client_read_cb( int fd, short op, void * arg )
+	{
+		UdpSocket * s = (UdpSocket *)arg;
+		s->DoRecv();
+	}
+
+}

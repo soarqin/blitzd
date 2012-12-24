@@ -1,12 +1,6 @@
 #ifndef _SOCKETSERVER_H_
 #define _SOCKETSERVER_H_
 
-#if defined(WIN32) && defined(USE_IOCP)
-
-#include "SocketServer.iocp.h"
-
-#else
-
 #include "utils/Thread.h"
 #include "utils/Memory.h"
 #include "SocketBase.h"
@@ -61,7 +55,5 @@ namespace Network
 		static void _timer_cb( int, short, void * );
 	};
 }
-
-#endif
 
 #endif // _SOCKETSERVER_H_
