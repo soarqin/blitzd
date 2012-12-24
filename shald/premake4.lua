@@ -12,6 +12,7 @@ project "shald"
     configuration "not vs*"
 	buildoptions { "-std=c++11" }
 	linkoptions { "-std=c++11" }
+	links { "event_pthreads" }
     configuration "windows"
         links { "ws2_32", "mswsock", "kernel32", "user32" }
     configuration "bsd"

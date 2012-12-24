@@ -57,7 +57,8 @@ namespace Network
 
 	void TcpClient::DoRecv()
 	{
-		OnRecv(SocketBuf(bufferevent_get_input(_bufev)));
+		SocketBuf sbuf(bufferevent_get_input(_bufev));
+		OnRecv(sbuf);
 	}
 
 	void TcpClient::DoSend()

@@ -15,7 +15,7 @@ project "blitzd"
     configuration "not vs*"
 	buildoptions { "-std=c++11" }
 	linkoptions { "-std=c++11" }
-        links { "gmp", "z" }
+        links { "gmp", "z", "event_pthreads" }
     configuration "windows"
         links { "ws2_32", "mswsock", "kernel32", "user32" }
     configuration { "Debug", "vs*" }
