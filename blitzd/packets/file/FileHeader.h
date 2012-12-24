@@ -12,6 +12,7 @@ namespace Packets
 			uint adid;
 			uint extag;
 			uint offset;
+			uint64 fileTime;
 		DECLARE_PACKET_TCP_END()
 	}
 }

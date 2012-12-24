@@ -9,9 +9,9 @@ namespace Plugins
 		bool FileReq::Process( Network::TcpClient& cl, Utils::Stream& st )
 		{
 			uint plat, prod;
-			uint64 ft;
 			Packets::File::FileHeader packet;
-			st >> plat >> prod >> packet.adid >> packet.extag >> packet.offset >> ft >> packet.fileName;
+			packet.fileTime = 0;
+			st >> plat >> prod >> packet.adid >> packet.extag >> packet.offset >> packet.fileTime >> packet.fileName;
 			LOG_DEBUG(("Requesting file %s...", packet.fileName.c_str()));
 			packet.BuildAndSendTo(cl);
 			return true;
