@@ -37,6 +37,10 @@ namespace Core
 
 	Client::~Client()
 	{
+		if(_game != NULL)
+			_game->Leave(this);
+		if(_channel != NULL)
+			_channel->Leave(this);
 		if(_user.get() != NULL)
 			clientPool.Remove(_user->GetUsername());
 		else
